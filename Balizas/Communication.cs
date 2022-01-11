@@ -9,9 +9,13 @@ using System.Net;
 using System.IO;
 namespace Balizas
 {
+
+    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
+    using Models;
     class Communication
     {
-        public String GetBalizas()
+        public List<Baliza> GetBalizas()
         {
             var url = $"https://www.euskalmet.euskadi.eus/vamet/stations/stationList/stationList.json";
             var request = (HttpWebRequest)WebRequest.Create(url);
@@ -24,13 +28,15 @@ namespace Balizas
                 {
                     using (Stream strReader = response.GetResponseStream())
                     {
-                        if (strReader == null) return "";
+                        if (strReader == null) return new List<Baliza>();
                         using (StreamReader objReader = new StreamReader(strReader))
                         {
                             string responseBody = objReader.ReadToEnd();
                             // Do something with responseBody
                             Console.WriteLine(responseBody);
-                            return responseBody;
+                            
+                            var list = JsonConvert.DeserializeObject<List<Baliza>>(responseBody);
+                            return list;
                         }
                     }
                 }
@@ -40,7 +46,7 @@ namespace Balizas
             {
                 // Handle error
             }
-            return "";
+            return new List<Baliza>();
         }
     }
 }

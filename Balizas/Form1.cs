@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Balizas.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,12 +16,17 @@ namespace Balizas
         public Form1()
         {
             InitializeComponent();
+            showStations();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void showStations() {
             Communication communication = new Communication();
-            label1.Text = communication.GetBalizas();
+            List<Baliza> balizas = communication.GetBalizas();
+            foreach (Baliza baliza in balizas)
+            {
+                listBox1.Items.Add(baliza.name);
+
+            }
         }
+        
     }
 }
