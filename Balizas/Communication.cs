@@ -11,9 +11,9 @@ namespace Balizas
 {
     class Communication
     {
-        public void GetBalizas()
+        public String GetBalizas()
         {
-            var url = $"http://localhost:8080/items";
+            var url = $"https://www.euskalmet.euskadi.eus/vamet/stations/stationList/stationList.json";
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "application/json";
@@ -24,21 +24,23 @@ namespace Balizas
                 {
                     using (Stream strReader = response.GetResponseStream())
                     {
-                        if (strReader == null) return;
+                        if (strReader == null) return "";
                         using (StreamReader objReader = new StreamReader(strReader))
                         {
                             string responseBody = objReader.ReadToEnd();
                             // Do something with responseBody
                             Console.WriteLine(responseBody);
+                            return responseBody;
                         }
                     }
                 }
+                
             }
             catch (WebException ex)
             {
                 // Handle error
             }
+            return "";
         }
-
     }
 }

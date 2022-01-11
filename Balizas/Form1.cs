@@ -17,5 +17,10 @@ namespace Balizas
             InitializeComponent();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Communication communication = new Communication();
+            label1.Text = communication.GetBalizas();
+        }
     }
 }
