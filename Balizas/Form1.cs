@@ -24,7 +24,6 @@ namespace Balizas
             foreach (Baliza baliza in balizas)
             {
                 listBox1.Items.Add(baliza.name);
-
             }
         }
         

@@ -29,7 +29,7 @@ namespace Balizas
                     using (Stream strReader = response.GetResponseStream())
                     {
                         if (strReader == null) return new List<Baliza>();
-                        using (StreamReader objReader = new StreamReader(strReader))
+                        using (StreamReader objReader = new StreamReader(strReader, System.Text.Encoding.UTF7))
                         {
                             string responseBody = objReader.ReadToEnd();
                             // Do something with responseBody
