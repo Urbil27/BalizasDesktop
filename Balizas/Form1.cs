@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,39 @@ namespace Balizas
                 listBox1.Items.Add(baliza.name);
             }
         }
-        
+
+        private void exportarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Communication communication = new Communication();
+            List<Baliza> balizas = communication.GetBalizas();
+            Mapa map = new Mapa();
+            map.Show();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Database database = new Database();
+            database.Connect();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Communication communication = new Communication();
+            DateTime date = DateTime.Now;
+            Baliza baliza = new Baliza();
+            baliza.id = "C054";
+            Debug.WriteLine("Baliza" + baliza.id);
+            communication.GetReadings(date,baliza);
+        }
     }
 }
