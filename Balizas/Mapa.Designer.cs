@@ -58,14 +58,15 @@
             this.gMapControl1.Zoom = 0D;
             this.gMapControl1.Load += new System.EventHandler(this.gMapControl1_Load);
             // 
-            // Map
+            // Mapa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 450);
             this.Controls.Add(this.gMapControl1);
-            this.Name = "Map";
+            this.Name = "Mapa";
             this.Text = "Map";
+            this.Load += new System.EventHandler(this.Mapa_Load);
             this.ResumeLayout(false);
 
         }

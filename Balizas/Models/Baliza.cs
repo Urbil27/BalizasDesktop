@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Balizas.Models
 {
-    class Baliza
+    public class Baliza
     {
         [BsonId]
         [BsonElement("id")]

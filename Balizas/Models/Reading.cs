@@ -17,7 +17,7 @@ namespace Balizas.Models
         [BsonElement("Month")]
         public int Month { get; set; }
         [BsonElement("Day")]
-        public public int Day { get; set; }
+        public int Day { get; set; }
         [BsonElement("Hour")]
         public int Hour { get; set; }
         [BsonElement("Minute")]

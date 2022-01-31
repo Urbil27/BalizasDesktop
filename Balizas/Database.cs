@@ -38,7 +38,15 @@ namespace Balizas
         {
             var database = dbClient.GetDatabase("Balizas");
             var tabla = database.GetCollection<Baliza>("balizas");
-            tabla.InsertMany(balizas);
+            try
+            {
+                tabla.InsertMany(balizas);
+            }
+            catch 
+            {
+
+            }
+            
 
         }
         public List<Reading> GetReadings()

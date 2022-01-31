@@ -9,22 +9,21 @@ using System.Text;
 using System.Windows.Forms;
 using Balizas.Models;
 using System.Collections.Generic;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
 namespace Balizas
 {
     public partial class Mapa : Form
     {
-        List<Baliza> balizas;
+        public List<Baliza> balizas;
 
-        public Mapa()
+        public Mapa(List<Baliza> balizas)
         {
             InitializeComponent();
-
+            this.balizas = balizas;
         }
-        public void SetBalizas()
-        {
-
-        }
+       
 
         private void gMapControl1_Load(object sender, EventArgs e)
         {
@@ -35,6 +34,19 @@ namespace Balizas
             gMapControl1.MinZoom = 0;
             gMapControl1.MaxZoom = 24;
             gMapControl1.AutoScroll = true;
+            foreach(Baliza b in balizas)
+            {
+                GMapOverlay markersOverlay = new GMapOverlay("markers");
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(b.y, b.x),
+                  GMarkerGoogleType.green);
+                markersOverlay.Markers.Add(marker);
+                gMapControl1.Overlays.Add(markersOverlay);
+            }
+        }
+
+        private void Mapa_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

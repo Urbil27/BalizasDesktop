@@ -36,7 +36,6 @@ namespace Balizas
                         using (StreamReader objReader = new StreamReader(strReader, System.Text.Encoding.UTF7))
                         {
                             string responseBody = objReader.ReadToEnd();
-                            // Do something with responseBody
                             Debug.WriteLine(responseBody);
                             
                             var list = JsonConvert.DeserializeObject<List<Baliza>>(responseBody);

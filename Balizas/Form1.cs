@@ -14,6 +14,7 @@ namespace Balizas
 {
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
             InitializeComponent();
@@ -37,13 +38,17 @@ namespace Balizas
         {
             Communication communication = new Communication();
             List<Baliza> balizas = communication.GetBalizas();
-            Mapa map = new Mapa();
+            Mapa map = new Mapa(balizas);
             map.Show();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+            Communication communication = new Communication();
+            List<Baliza> balizas = communication.GetBalizas();
+            Database database = new Database();
+            database.InsertAll(balizas);
         }
 
         private void button1_Click(object sender, EventArgs e)
