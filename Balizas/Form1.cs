@@ -49,7 +49,7 @@ namespace Balizas
         private void button1_Click(object sender, EventArgs e)
         {
             Database database = new Database();
-            database.Connect();
+            //database.Connect();
         }
 
         private void button2_Click(object sender, EventArgs e)

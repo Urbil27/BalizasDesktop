@@ -54,12 +54,14 @@ namespace Balizas
         }
         public async void GetReadings(DateTime day, Baliza baliza)
         {
+            List<Reading> readings = new List<Reading>();
             String url = "https://www.euskalmet.euskadi.eus/vamet/stations/readings/"+baliza.id+"/"+day.ToString("yyyy/MM/dd")+"/readingsData.json";
             Debug.WriteLine(url);
             var client = new HttpClient { BaseAddress = new Uri(url) };
             var responseMessage = await client.GetAsync("", HttpCompletionOption.ResponseHeadersRead);
             var resultData = await responseMessage.Content.ReadAsStringAsync();
             dynamic readingdJson = JsonConvert.DeserializeObject(resultData);
+            Reading reading = new Reading();
             foreach(var obj in readingdJson)
             {
                 foreach (JObject stationTypeJson in obj)
@@ -83,14 +85,35 @@ namespace Balizas
                         TimeSpan time = new TimeSpan(timeParser.hours, timeParser.minutes,0);
                         dateTime = dateTime.Date + time;
                         Debug.WriteLine(dateTime.ToString());
-                        Reading reading = new Reading(balizaId, name, type,dateTime, value);
-                        reading.save();
+                        reading.BalizaID = balizaId;
+                        reading.Day = dateTime.Day;
+                        reading.Month = dateTime.Month;
+                        reading.Year = dateTime.Year;
+                        reading.Hour = dateTime.Hour;
+                        reading.Minute = dateTime.Minute;
+                        if(name == "temperature")
+                        {
+                            reading.temperature = value;
+                        } else if (name == "humidity")
+                        {
+                            reading.humidity = value;
+                        } else if (name == "irradiance")
+                        {
+                            reading.irradiance = value;
+                        }else if (name == "precipitation")
+                        {
+                            reading.precipitation = value;
+                        }
+
+                       // Reading reading = new Reading(balizaId, name, type,dateTime, value);
+                        
                     }
 
 
                 }
 
             }
+            //return readings;
         }
     }
 }

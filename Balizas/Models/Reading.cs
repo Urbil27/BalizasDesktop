@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,31 +7,50 @@ namespace Balizas.Models
 {
     internal class Reading
     {
-        string BalizaID { get; set; }
-        int Year { get; set; }
-        int Month { get; set; }
-        public int Day { get; set; }
-        int Hour { get; set; }
-        int Minute { get; set; }
-        
-        public string Type { get; set; }
-        public string Name { get; set; }
-        public double  Value { get; set; }
-        
-        public Reading(string balizaID,string name,string type, DateTime dateTime, Double value)
+        [BsonId]
+        [BsonElement("id")]
+        public int id { get; set; }
+        [BsonElement("BalizaID")]
+        public string BalizaID { get; set; }
+        [BsonElement("Year")]
+        public int Year { get; set; }
+        [BsonElement("Month")]
+        public int Month { get; set; }
+        [BsonElement("Day")]
+        public public int Day { get; set; }
+        [BsonElement("Hour")]
+        public int Hour { get; set; }
+        [BsonElement("Minute")]
+        public int Minute { get; set; }
+        [BsonElement("Temperature")]
+        public double temperature { get; set; }
+        [BsonElement("Humidity")]
+        public double humidity { get; set; }
+        [BsonElement("Precicitation")]
+        public double precipitation { get; set; }
+        [BsonElement("Irradiance")]
+        public double irradiance { get; set; }
+        public Reading()
+        {
+
+        }
+        public Reading(string balizaID,DateTime dateTime, double temperature, double humidity, double precipitation, double irradiance)
         {
             this.BalizaID = balizaID;
-            this.Name = name;
-            this.Type = type;
             this.Year = dateTime.Year; 
             this.Month = dateTime.Month;
             this.Day = dateTime.Day;
             this.Hour = dateTime.Hour;
             this.Minute = dateTime.Minute;
-            this.Value = value;
+            this.temperature = temperature;
+            this.humidity = humidity;
+            this.precipitation = precipitation;
+            this.irradiance = irradiance;
         }
         public void save()
         {
+            Database database = new Database();
+            database.Insert(this);
 
         }
     }
