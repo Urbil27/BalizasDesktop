@@ -62,9 +62,10 @@ namespace Balizas
             Communication communication = new Communication();
             DateTime date = DateTime.Now;
             Baliza baliza = new Baliza();
-            baliza.id = "C054";
+            baliza.id = "C016";
             Debug.WriteLine("Baliza" + baliza.id);
             communication.GetReadings(date,baliza);
+
         }
     }
 }

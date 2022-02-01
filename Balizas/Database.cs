@@ -17,7 +17,18 @@ namespace Balizas
         {
             var database = dbClient.GetDatabase("Balizas");
             var tabla = database.GetCollection<Reading>("readings");
-            tabla.InsertOne(reading);
+            var filter = Builders<Reading>.Filter.Eq( r=> r.id, reading.id);
+           // try
+           // {
+                tabla.InsertOne(reading);
+            Debug.WriteLine(reading.id);
+            //}
+           /* catch
+            {
+                Debug.WriteLine("LOOOOOL");
+                tabla.ReplaceOne(filter,reading);
+            }*/
+           
 
         }
         public void Insert(Baliza baliza)
@@ -31,6 +42,10 @@ namespace Balizas
         {
             var database = dbClient.GetDatabase("Balizas");
             var tabla = database.GetCollection<Reading>("readings");
+            foreach(Reading r in readings)
+            {
+                Debug.WriteLine("Guardo el registro " + r.id);
+            }
             tabla.InsertMany(readings);
 
         }

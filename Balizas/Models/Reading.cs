@@ -9,19 +9,23 @@ namespace Balizas.Models
     {
         [BsonId]
         [BsonElement("id")]
-        public int id { get; set; }
+        public String id { get; set; }
         [BsonElement("BalizaID")]
         public string BalizaID { get; set; }
-        [BsonElement("Year")]
-        public int Year { get; set; }
-        [BsonElement("Month")]
-        public int Month { get; set; }
-        [BsonElement("Day")]
-        public int Day { get; set; }
-        [BsonElement("Hour")]
-        public int Hour { get; set; }
-        [BsonElement("Minute")]
-        public int Minute { get; set; }
+        [BsonElement("Datetime")]
+        public string Datetime { get; set; }
+        
+        [BsonElement("mean_speed")]
+        public double mean_speed { get; set; }
+        [BsonElement("mean_direction")]
+        public double mean_direction { get; set; }
+        [BsonElement("max_speed")]
+        public double max_speed { get; set; }
+        [BsonElement("speed_sigma")]
+        public double speed_sigma { get; set; }
+        [BsonElement("direction_sigma")]
+        public double direction_sigma { get; set; }
+
         [BsonElement("Temperature")]
         public double temperature { get; set; }
         [BsonElement("Humidity")]
@@ -37,11 +41,7 @@ namespace Balizas.Models
         public Reading(string balizaID,DateTime dateTime, double temperature, double humidity, double precipitation, double irradiance)
         {
             this.BalizaID = balizaID;
-            this.Year = dateTime.Year; 
-            this.Month = dateTime.Month;
-            this.Day = dateTime.Day;
-            this.Hour = dateTime.Hour;
-            this.Minute = dateTime.Minute;
+            this.Datetime = dateTime+"";
             this.temperature = temperature;
             this.humidity = humidity;
             this.precipitation = precipitation;
