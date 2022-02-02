@@ -15,17 +15,6 @@ namespace Balizas.Models
         [BsonElement("Datetime")]
         public string Datetime { get; set; }
         
-        [BsonElement("mean_speed")]
-        public double mean_speed { get; set; }
-        [BsonElement("mean_direction")]
-        public double mean_direction { get; set; }
-        [BsonElement("max_speed")]
-        public double max_speed { get; set; }
-        [BsonElement("speed_sigma")]
-        public double speed_sigma { get; set; }
-        [BsonElement("direction_sigma")]
-        public double direction_sigma { get; set; }
-
         [BsonElement("Temperature")]
         public double temperature { get; set; }
         [BsonElement("Humidity")]

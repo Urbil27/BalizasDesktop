@@ -39,7 +39,15 @@ namespace Balizas
                             Debug.WriteLine(responseBody);
 
                             var list = JsonConvert.DeserializeObject<List<Baliza>>(responseBody);
-                            return list;
+                            List<Baliza>definitiveList = new List<Baliza>();   
+                            foreach (Baliza item in list)
+                            {
+                                if (item.stationType.Equals("METEOROLOGICAL"))
+                                {
+                                    definitiveList.Add(item);
+                                }
+                            }
+                            return definitiveList;
                         }
                     }
                 }
@@ -51,22 +59,26 @@ namespace Balizas
             }
             return new List<Baliza>();
         }
-        public async void GetReadings(DateTime day, Baliza baliza)
+        public async void GetReadings(DateTime day, String balizaID)
         {
+        
             List<Reading> readings = new List<Reading>();
-            String url = "https://www.euskalmet.euskadi.eus/vamet/stations/readings/" + baliza.id + "/" + day.ToString("yyyy/MM/dd") + "/readingsData.json";
+            String url = "https://www.euskalmet.euskadi.eus/vamet/stations/readings/" + balizaID + "/" + day.ToString("yyyy/MM/dd") + "/readingsData.json";
             var client = new HttpClient { BaseAddress = new Uri(url) };
             var responseMessage = await client.GetAsync("", HttpCompletionOption.ResponseHeadersRead);
             var resultData = await responseMessage.Content.ReadAsStringAsync();
             dynamic readingdJson = JsonConvert.DeserializeObject(resultData);
             Database database = new Database();
+            database.deleteAllReadings();
             JObject fullJson = JObject.Parse(resultData);
 
             IList<string> mainKeys = fullJson.Properties().Select(p => p.Name).ToList();
-            IDictionary<String, Reading> Readings = new Dictionary<String, Reading>();
-            foreach (string key in mainKeys)
+           
+
+            Reading reading = new Reading();
+            foreach (string mainkey in mainKeys)
             {
-                JObject mainData = JObject.Parse(fullJson[key].ToString());
+                JObject mainData = JObject.Parse(fullJson[mainkey].ToString());
 
 
                 String name = mainData["name"].ToString();
@@ -77,110 +89,59 @@ namespace Balizas
                 
                 JObject dataDef = JObject.Parse(data[keys[0]].ToString());
                 IList<string> numKey = data.Properties().Select(p => p.Name).ToList();
-                //No coje todos los timeKeys
+               
                 IList<string> timeKeys = dataDef.Properties().Select(p => p.Name).ToList();
-
-                foreach (string timeKey in timeKeys)
+                IEnumerable<string> sortedEnum = timeKeys.OrderBy(f => f);
+                List<string> sortedList = sortedEnum.ToList();
+                string lastTime = sortedList[sortedList.Count() - 1];
+                Debug.WriteLine("the last time is " + lastTime);
+                
+                
+                Debug.WriteLine("timekey "+lastTime);
+                if (mainkey == "21")
                 {
-                    Reading reading ;
-                    Debug.WriteLine("timekey "+timeKey);
-                    if (key == "11")
-                    {
-                        Debug.WriteLine("Entro en 11");
-                       
-                        reading = new Reading();
-
-
-                        TimeParser timeParser = new TimeParser(timeKey);
-                        DateTime dateTime = day;
-                        TimeSpan time = new TimeSpan(timeParser.hours, timeParser.minutes, 0);
-                        dateTime = dateTime.Date + time;
-                        reading.id = balizaId + dateTime;
+                    Debug.WriteLine("Entro en 21");
+                    TimeParser timeParser = new TimeParser(lastTime);
+                    DateTime dateTime = day;
+                    TimeSpan time = new TimeSpan(timeParser.hours, timeParser.minutes, 0);
+                    dateTime = dateTime.Date + time;
+                    reading.id = balizaId+ "-" + dateTime;
                         
-                        reading.BalizaID = balizaId;
+                    reading.BalizaID = balizaId;
 
-                        reading.Datetime = dateTime+"";
-                        reading.mean_speed = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Add(timeKey, reading);
-
-                    }
-                    else if (key == "12")
-                    {
-                        Debug.WriteLine("Entro en 12");
-                        reading = Readings[timeKey];
-                        reading.mean_direction = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "14")
-                    {
-                        Debug.WriteLine("Entro en 14");
-                        reading = Readings[timeKey];
-                        reading.max_speed = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "16")
-                    {
-                        Debug.WriteLine("Entro en 16");
-                        reading = Readings[timeKey];
-                        reading.speed_sigma = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "17")
-                    {
-                        Debug.WriteLine("Entro en 17");
-                        reading = Readings[timeKey];
-                        reading.direction_sigma = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "21")
-                    {
-                        Debug.WriteLine("Entro en 21");
-                        reading = Readings[timeKey];
-                        reading.temperature = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "31")
-                    {
-                        Debug.WriteLine("Entro en 31");
-                        reading = Readings[timeKey];
-                        reading.humidity = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "40")
-                    {
-                        Debug.WriteLine("Entro en 40");
-                        reading = Readings[timeKey];
-                        reading.precipitation = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-                    }
-                    else if (key == "70")
-                    {
-                        Debug.WriteLine("Entro en 70");
-                        reading = Readings[timeKey];
-                        reading.irradiance = Double.Parse(dataDef[timeKey].ToString());
-                        Readings.Remove(timeKey);
-                        Readings.Add(timeKey, reading);
-
-                        
-
-                    }
+                    reading.Datetime = dateTime+"";
+                    reading.temperature = Double.Parse(dataDef[lastTime].ToString());
                     
+
+                }
+                else if (mainkey == "31")
+                {
+                    Debug.WriteLine("Entro en 31");
+                    reading.humidity = Double.Parse(dataDef[lastTime].ToString());
+                 
+         
+                }
+                else if (mainkey == "40")
+                {
+                    Debug.WriteLine("Entro en 40");
+                    reading.precipitation = Double.Parse(dataDef[lastTime].ToString());
+                  
+                }
+                else if (mainkey == "70")
+                {
+                    Debug.WriteLine("Entro en 70");
+                    reading.irradiance = Double.Parse(dataDef[lastTime].ToString());
+               
                 }
                 
+                
+                
             }
-            foreach (KeyValuePair<string, Reading> entry in Readings)
-            {
-                // do something with entry.Value or entry.Key
-                //Debug.WriteLine(entry.Value.id);
-                database.Insert(entry.Value);
-            }
+            database.Insert(reading);
+            Debug.WriteLine("tenperature: " + reading.temperature);
+            Debug.WriteLine("humidity: " + reading.humidity);
+            Debug.WriteLine("irradiance: " + reading.irradiance);
+            Debug.WriteLine("precipitation: " + reading.precipitation);
         }
     }
 }

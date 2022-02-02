@@ -80,5 +80,23 @@ namespace Balizas
             balizas = table.Find(d => true).ToList();
             return balizas;
         }
+        public void deleteAllReadings()
+        {
+            var database = dbClient.GetDatabase("Balizas");
+            
+            try
+            {
+                database.DropCollection("readings");
+            }
+            catch
+            {
+
+            }
+            
+        }
+        public Baliza findBaliza(String name)
+        {
+            return null;
+        }
     }
 }
