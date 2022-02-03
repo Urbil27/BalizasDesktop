@@ -53,29 +53,57 @@ namespace Balizas
                 balizas = communication.GetBalizas();
                 database.InsertAll(balizas);
             }
+            prepareDatabase();
             showStations();
             
         }
 
-    
-
-        private void button2_Click(object sender, EventArgs e)
+        private void prepareDatabase()
         {
             Communication communication = new Communication();
             DateTime date = DateTime.Now;
             Baliza baliza = new Baliza();
             baliza.id = "C016";
             Debug.WriteLine("Baliza" + baliza.id);
-            communication.GetReadings(date,baliza.id);
-           
-
+            communication.GetReadings(date, baliza.id);
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String balizaName = listBox1.SelectedIndex.ToString();
-            Database db = new Database();
+            Debug.WriteLine("Cambiado");
+            Database database = new Database();
+            Communication communication = new Communication();
+            String balizaName = listBox1.GetItemText(listBox1.SelectedItem);
+            DateTime date = DateTime.Now;
+            foreach (Baliza baliza in balizas)
+            {
+
+                Debug.WriteLine("nombre de la baliza: " + baliza.name + " "+ balizaName);
+                if (baliza.name.Equals(balizaName))
+                {
+                    
+                    communication.GetReadings(date,baliza.id);
+                    
+                    List<Reading> readings= database.GetReadings();
+                    
+                    Debug.WriteLine("Size "+readings.Count());
+                    Reading reading = readings[0];
+                    Debug.WriteLine("ftenperature: " + reading.temperature);
+                    Debug.WriteLine("fhumidity: " + reading.humidity);
+                    Debug.WriteLine("firradiance: " + reading.irradiance);
+                    Debug.WriteLine("fprecipitation: " + reading.precipitation);
+                    tempLabel.Text = reading.temperature+"ºC";
+                    humLabel.Text = reading.humidity + "%";
+                    precLabel.Text = reading.precipitation + "";
+                    irLabel.Text = reading.irradiance + "";
+                }
+            }
             
+        }
+
+        private void humLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

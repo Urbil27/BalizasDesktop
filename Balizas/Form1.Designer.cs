@@ -29,18 +29,24 @@ namespace Balizas
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.favoritosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.añadirAFavoritosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button2 = new System.Windows.Forms.Button();
+            this.tempLabel = new System.Windows.Forms.Label();
+            this.humLabel = new System.Windows.Forms.Label();
+            this.precLabel = new System.Windows.Forms.Label();
+            this.irLabel = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
@@ -61,44 +67,12 @@ namespace Balizas
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.archivoToolStripMenuItem,
-            this.verToolStripMenuItem,
-            this.favoritosToolStripMenuItem});
+            this.verToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(915, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // archivoToolStripMenuItem
-            // 
-            this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportarToolStripMenuItem});
-            this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.archivoToolStripMenuItem.Text = "Archivo";
-            // 
-            // exportarToolStripMenuItem
-            // 
-            this.exportarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportarPDFToolStripMenuItem,
-            this.exportarExcelToolStripMenuItem});
-            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.exportarToolStripMenuItem.Text = "Exportar";
-            this.exportarToolStripMenuItem.Click += new System.EventHandler(this.exportarToolStripMenuItem_Click);
-            // 
-            // exportarPDFToolStripMenuItem
-            // 
-            this.exportarPDFToolStripMenuItem.Name = "exportarPDFToolStripMenuItem";
-            this.exportarPDFToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.exportarPDFToolStripMenuItem.Text = "Exportar PDF";
-            // 
-            // exportarExcelToolStripMenuItem
-            // 
-            this.exportarExcelToolStripMenuItem.Name = "exportarExcelToolStripMenuItem";
-            this.exportarExcelToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.exportarExcelToolStripMenuItem.Text = "Exportar Excel";
             // 
             // verToolStripMenuItem
             // 
@@ -115,37 +89,101 @@ namespace Balizas
             this.mapaToolStripMenuItem.Text = "Mapa";
             this.mapaToolStripMenuItem.Click += new System.EventHandler(this.mapaToolStripMenuItem_Click);
             // 
-            // favoritosToolStripMenuItem
+            // tempLabel
             // 
-            this.favoritosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.añadirAFavoritosToolStripMenuItem});
-            this.favoritosToolStripMenuItem.Name = "favoritosToolStripMenuItem";
-            this.favoritosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.favoritosToolStripMenuItem.Text = "Favoritos";
+            this.tempLabel.AutoSize = true;
+            this.tempLabel.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tempLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.tempLabel.Location = new System.Drawing.Point(297, 53);
+            this.tempLabel.Name = "tempLabel";
+            this.tempLabel.Size = new System.Drawing.Size(118, 72);
+            this.tempLabel.TabIndex = 5;
+            this.tempLabel.Text = "null";
             // 
-            // añadirAFavoritosToolStripMenuItem
+            // humLabel
             // 
-            this.añadirAFavoritosToolStripMenuItem.Name = "añadirAFavoritosToolStripMenuItem";
-            this.añadirAFavoritosToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.añadirAFavoritosToolStripMenuItem.Text = "Añadir a favoritos";
+            this.humLabel.AutoSize = true;
+            this.humLabel.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.humLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.humLabel.Location = new System.Drawing.Point(667, 53);
+            this.humLabel.Name = "humLabel";
+            this.humLabel.Size = new System.Drawing.Size(118, 72);
+            this.humLabel.TabIndex = 7;
+            this.humLabel.Text = "null";
+            this.humLabel.Click += new System.EventHandler(this.humLabel_Click);
             // 
-            // button2
+            // precLabel
             // 
-            this.button2.Location = new System.Drawing.Point(418, 299);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.precLabel.AutoSize = true;
+            this.precLabel.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.precLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.precLabel.Location = new System.Drawing.Point(297, 212);
+            this.precLabel.Name = "precLabel";
+            this.precLabel.Size = new System.Drawing.Size(118, 72);
+            this.precLabel.TabIndex = 9;
+            this.precLabel.Text = "null";
+            // 
+            // irLabel
+            // 
+            this.irLabel.AutoSize = true;
+            this.irLabel.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.irLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.irLabel.Location = new System.Drawing.Point(667, 212);
+            this.irLabel.Name = "irLabel";
+            this.irLabel.Size = new System.Drawing.Size(118, 72);
+            this.irLabel.TabIndex = 11;
+            this.irLabel.Text = "null";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.Location = new System.Drawing.Point(199, 39);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(92, 101);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(547, 36);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox2.TabIndex = 13;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
+            this.pictureBox3.Location = new System.Drawing.Point(193, 193);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox3.TabIndex = 14;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
+            this.pictureBox4.Location = new System.Drawing.Point(547, 193);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(98, 104);
+            this.pictureBox4.TabIndex = 15;
+            this.pictureBox4.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(915, 342);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.irLabel);
+            this.Controls.Add(this.precLabel);
+            this.Controls.Add(this.humLabel);
+            this.Controls.Add(this.tempLabel);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -154,6 +192,10 @@ namespace Balizas
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,15 +205,16 @@ namespace Balizas
 
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem archivoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportarPDFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportarExcelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem favoritosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem añadirAFavoritosToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label tempLabel;
+        private System.Windows.Forms.Label humLabel;
+        private System.Windows.Forms.Label precLabel;
+        private System.Windows.Forms.Label irLabel;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
 

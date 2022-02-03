@@ -70,6 +70,14 @@ namespace Balizas
             var table = database.GetCollection<Reading>("readings");
             List<Reading> readings = new List<Reading>();  
             readings = table.Find(d => true).ToList();
+            foreach(Reading r in readings)
+            {
+                Debug.WriteLine("dtenperature " + r.temperature);
+                Debug.WriteLine("dprecipitation " + r.precipitation);
+                Debug.WriteLine("dhumidity " + r.humidity);
+                Debug.WriteLine("dirradiance " + r.irradiance);
+
+            }
             return readings;
         }
         public List<Baliza> GetBalizas()
@@ -94,9 +102,6 @@ namespace Balizas
             }
             
         }
-        public Baliza findBaliza(String name)
-        {
-            return null;
-        }
+       
     }
 }
