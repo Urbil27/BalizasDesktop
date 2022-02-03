@@ -40,7 +40,7 @@ namespace Balizas
                             Debug.WriteLine(responseBody);
 
                             var list = JsonConvert.DeserializeObject<List<Baliza>>(responseBody);
-                            List<Baliza>definitiveList = new List<Baliza>();   
+                            List<Baliza> definitiveList = new List<Baliza>();
                             foreach (Baliza item in list)
                             {
                                 if (item.stationType.Equals("METEOROLOGICAL"))
@@ -62,94 +62,110 @@ namespace Balizas
         }
         public void getAllReadings(List<Baliza> balizas)
         {
-            foreach
+            Database database = new Database();
+            DateTime today = DateTime.Now;
+            database.deleteAllReadings();
+            foreach (Baliza baliza in balizas)
+            {
+                this.GetReadings(today, baliza.id);
+            }
         }
         public async void GetReadings(DateTime day, String balizaID)
         {
-            
+
             {
                 List<Reading> readings = new List<Reading>();
                 String url = "https://www.euskalmet.euskadi.eus/vamet/stations/readings/" + balizaID + "/" + day.ToString("yyyy/MM/dd") + "/readingsData.json";
                 var client = new HttpClient { BaseAddress = new Uri(url) };
                 var responseMessage = await client.GetAsync("", HttpCompletionOption.ResponseHeadersRead);
                 var resultData = await responseMessage.Content.ReadAsStringAsync();
-                dynamic readingdJson = JsonConvert.DeserializeObject(resultData);
-                Database database = new Database();
-                database.deleteAllReadings();
-                JObject fullJson = JObject.Parse(resultData);
-
-                IList<string> mainKeys = fullJson.Properties().Select(p => p.Name).ToList();
-
-
-                Reading reading = new Reading();
-                foreach (string mainkey in mainKeys)
+                try
                 {
-                    JObject mainData = JObject.Parse(fullJson[mainkey].ToString());
+                    dynamic readingdJson = JsonConvert.DeserializeObject(resultData);
+                    Database database = new Database();
+
+                    JObject fullJson = JObject.Parse(resultData);
+
+                    IList<string> mainKeys = fullJson.Properties().Select(p => p.Name).ToList();
 
 
-                    String name = mainData["name"].ToString();
-                    String balizaId = mainData["station"].ToString();
-                    String type = mainData["type"].ToString();
-                    JObject data = JObject.Parse(mainData["data"].ToString());
-                    IList<string> keys = data.Properties().Select(p => p.Name).ToList();
-
-                    JObject dataDef = JObject.Parse(data[keys[0]].ToString());
-                    IList<string> numKey = data.Properties().Select(p => p.Name).ToList();
-
-                    IList<string> timeKeys = dataDef.Properties().Select(p => p.Name).ToList();
-                    IEnumerable<string> sortedEnum = timeKeys.OrderBy(f => f);
-                    List<string> sortedList = sortedEnum.ToList();
-                    string lastTime = sortedList[sortedList.Count() - 1];
-                    Debug.WriteLine("the last time is " + lastTime);
-
-
-                    Debug.WriteLine("timekey " + lastTime);
-                    if (mainkey == "21")
+                    Reading reading = new Reading();
+                    foreach (string mainkey in mainKeys)
                     {
-                        Debug.WriteLine("Entro en 21");
-                        TimeParser timeParser = new TimeParser(lastTime);
-                        DateTime dateTime = day;
-                        TimeSpan time = new TimeSpan(timeParser.hours, timeParser.minutes, 0);
-                        dateTime = dateTime.Date + time;
-                        reading.id = balizaId + "-" + dateTime;
+                        JObject mainData = JObject.Parse(fullJson[mainkey].ToString());
 
-                        reading.BalizaID = balizaId;
 
-                        reading.Datetime = dateTime + "";
-                        reading.temperature = Double.Parse(dataDef[lastTime].ToString());
+                        String name = mainData["name"].ToString();
+                        String balizaId = mainData["station"].ToString();
+                        String type = mainData["type"].ToString();
+                        JObject data = JObject.Parse(mainData["data"].ToString());
+                        IList<string> keys = data.Properties().Select(p => p.Name).ToList();
+
+                        JObject dataDef = JObject.Parse(data[keys[0]].ToString());
+                        IList<string> numKey = data.Properties().Select(p => p.Name).ToList();
+
+                        IList<string> timeKeys = dataDef.Properties().Select(p => p.Name).ToList();
+                        IEnumerable<string> sortedEnum = timeKeys.OrderBy(f => f);
+                        List<string> sortedList = sortedEnum.ToList();
+                        string lastTime = sortedList[sortedList.Count() - 1];
+                        Debug.WriteLine("the last time is " + lastTime);
+
+
+                        Debug.WriteLine("timekey " + lastTime);
+                        if (mainkey == "21")
+                        {
+                            Debug.WriteLine("Entro en 21");
+                            TimeParser timeParser = new TimeParser(lastTime);
+                            DateTime dateTime = day;
+                            TimeSpan time = new TimeSpan(timeParser.hours, timeParser.minutes, 0);
+                            dateTime = dateTime.Date + time;
+                            reading.id = balizaId + "-" + dateTime;
+
+                            reading.BalizaID = balizaId;
+
+                            reading.Datetime = dateTime + "";
+                            reading.temperature = Double.Parse(dataDef[lastTime].ToString());
+
+
+                        }
+                        else if (mainkey == "31")
+                        {
+                            Debug.WriteLine("Entro en 31");
+                            reading.humidity = Double.Parse(dataDef[lastTime].ToString());
+
+
+                        }
+                        else if (mainkey == "40")
+                        {
+                            Debug.WriteLine("Entro en 40");
+                            reading.precipitation = Double.Parse(dataDef[lastTime].ToString());
+
+                        }
+                        else if (mainkey == "70")
+                        {
+                            Debug.WriteLine("Entro en 70");
+                            reading.irradiance = Double.Parse(dataDef[lastTime].ToString());
+
+                        }
+
 
 
                     }
-                    else if (mainkey == "31")
-                    {
-                        Debug.WriteLine("Entro en 31");
-                        reading.humidity = Double.Parse(dataDef[lastTime].ToString());
-
-
-                    }
-                    else if (mainkey == "40")
-                    {
-                        Debug.WriteLine("Entro en 40");
-                        reading.precipitation = Double.Parse(dataDef[lastTime].ToString());
-
-                    }
-                    else if (mainkey == "70")
-                    {
-                        Debug.WriteLine("Entro en 70");
-                        reading.irradiance = Double.Parse(dataDef[lastTime].ToString());
-
-                    }
-
-
-
+                    Debug.WriteLine("ctenperature: " + reading.temperature);
+                    Debug.WriteLine("chumidity: " + reading.humidity);
+                    Debug.WriteLine("cirradiance: " + reading.irradiance);
+                    Debug.WriteLine("cprecipitation: " + reading.precipitation);
+                    database.Insert(reading);
                 }
-                Debug.WriteLine("ctenperature: " + reading.temperature);
-                Debug.WriteLine("chumidity: " + reading.humidity);
-                Debug.WriteLine("cirradiance: " + reading.irradiance);
-                Debug.WriteLine("cprecipitation: " + reading.precipitation);
-                database.Insert(reading);
-             
+                catch
+                {
+                    Debug.WriteLine("Error baliza");
+                }
+               
+
+            }
         }
     }
+}
 
 

@@ -54,6 +54,8 @@ namespace Balizas
                 database.InsertAll(balizas);
             }
             prepareDatabase();
+            database.deleteAllReadings();
+            communication.getAllReadings(balizas);
             showStations();
             
         }
@@ -82,20 +84,26 @@ namespace Balizas
                 if (baliza.name.Equals(balizaName))
                 {
                     
-                    communication.GetReadings(date,baliza.id);
+                    //communication.GetReadings(date,baliza.id);
                     
                     List<Reading> readings= database.GetReadings();
-                    
-                    Debug.WriteLine("Size "+readings.Count());
-                    Reading reading = readings[0];
-                    Debug.WriteLine("ftenperature: " + reading.temperature);
-                    Debug.WriteLine("fhumidity: " + reading.humidity);
-                    Debug.WriteLine("firradiance: " + reading.irradiance);
-                    Debug.WriteLine("fprecipitation: " + reading.precipitation);
-                    tempLabel.Text = reading.temperature+"ºC";
-                    humLabel.Text = reading.humidity + "%";
-                    precLabel.Text = reading.precipitation + "";
-                    irLabel.Text = reading.irradiance + "";
+                    foreach(Reading read in readings)
+                    {
+                        if(read.BalizaID == baliza.id)
+                        {
+                           // Debug.WriteLine("Size " + readings.Count());
+                          //  Reading reading = readings[0];
+                            Debug.WriteLine("ftenperature: " + read.temperature);
+                            Debug.WriteLine("fhumidity: " + read.humidity);
+                            Debug.WriteLine("firradiance: " + read.irradiance);
+                            Debug.WriteLine("fprecipitation: " + read.precipitation);
+                            tempLabel.Text = read.temperature + "ºC";
+                            humLabel.Text = read.humidity + "%";
+                            precLabel.Text = read.precipitation + "";
+                            irLabel.Text = read.irradiance + "";
+                        }
+                    }    
+                  
                 }
             }
             
