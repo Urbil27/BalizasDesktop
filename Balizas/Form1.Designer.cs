@@ -29,6 +29,7 @@ namespace Balizas
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -42,6 +43,7 @@ namespace Balizas
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -96,9 +98,8 @@ namespace Balizas
             this.tempLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.tempLabel.Location = new System.Drawing.Point(297, 53);
             this.tempLabel.Name = "tempLabel";
-            this.tempLabel.Size = new System.Drawing.Size(118, 72);
+            this.tempLabel.Size = new System.Drawing.Size(0, 72);
             this.tempLabel.TabIndex = 5;
-            this.tempLabel.Text = "null";
             // 
             // humLabel
             // 
@@ -107,9 +108,8 @@ namespace Balizas
             this.humLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.humLabel.Location = new System.Drawing.Point(667, 53);
             this.humLabel.Name = "humLabel";
-            this.humLabel.Size = new System.Drawing.Size(118, 72);
+            this.humLabel.Size = new System.Drawing.Size(0, 72);
             this.humLabel.TabIndex = 7;
-            this.humLabel.Text = "null";
             this.humLabel.Click += new System.EventHandler(this.humLabel_Click);
             // 
             // precLabel
@@ -119,9 +119,8 @@ namespace Balizas
             this.precLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.precLabel.Location = new System.Drawing.Point(297, 212);
             this.precLabel.Name = "precLabel";
-            this.precLabel.Size = new System.Drawing.Size(118, 72);
+            this.precLabel.Size = new System.Drawing.Size(0, 72);
             this.precLabel.TabIndex = 9;
-            this.precLabel.Text = "null";
             // 
             // irLabel
             // 
@@ -130,9 +129,8 @@ namespace Balizas
             this.irLabel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.irLabel.Location = new System.Drawing.Point(667, 212);
             this.irLabel.Name = "irLabel";
-            this.irLabel.Size = new System.Drawing.Size(118, 72);
+            this.irLabel.Size = new System.Drawing.Size(0, 72);
             this.irLabel.TabIndex = 11;
-            this.irLabel.Text = "null";
             // 
             // pictureBox1
             // 
@@ -169,6 +167,12 @@ namespace Balizas
             this.pictureBox4.Size = new System.Drawing.Size(98, 104);
             this.pictureBox4.TabIndex = 15;
             this.pictureBox4.TabStop = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 600000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -215,6 +219,7 @@ namespace Balizas
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
